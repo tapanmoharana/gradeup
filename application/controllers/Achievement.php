@@ -6,6 +6,7 @@ class Achievement extends CI_Controller
     var $title="";
 	var $tap="";
    var $jug="";
+   var $bhau='';
     public function __construct() 
     {
 		//added by TP
