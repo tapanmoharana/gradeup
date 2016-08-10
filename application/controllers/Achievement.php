@@ -8,6 +8,7 @@ class Achievement extends CI_Controller
    
     public function __construct() 
     {
+		//added by TP
         global $menudata;
         parent:: __construct();
         
