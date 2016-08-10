@@ -5,7 +5,7 @@ class Achievement extends CI_Controller
     var $currentModule="";
     var $title="";
 	var $tap="";
-   
+   var $jug="";
     public function __construct() 
     {
 		//added by TP
