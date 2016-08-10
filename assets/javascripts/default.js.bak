@@ -1,0 +1,226 @@
+function test(){
+	alert("here");
+	exit;
+
+}
+
+
+function makeaction(val,emp_id){
+	var post_data=actionvsal=empid='';
+	post_data="ajax=1";
+	post_data+="&actionvsal="+val+"&empid="+emp_id;
+	jQuery.ajax({
+			type: "POST",
+			url: base_url+"Empdetail/update_empstatus",
+		   	data: post_data,
+			success: function(responce_data){
+			location.reload(true);			
+			}	
+		});
+
+}
+function getlocation(compval){
+
+	var post_data=comp_value='';
+	post_data="ajax=1";
+	post_data+="&comp_value="+compval;
+	jQuery.ajax({
+			type: "POST",
+			url: base_url+"Empdetail/get_location",
+		   	data: post_data,
+			success: function(responce_data){
+				$('#locdisp').html(responce_data);					
+			}	
+		});
+
+
+}
+
+
+function makeaction_delete(id){
+	 var delitem=confirm("Are you sure to delete record?")
+	 if (delitem) {
+		var post_data=design_id='';
+		post_data="ajax=1";
+		post_data+="&design_id="+id;
+		jQuery.ajax({
+		type: "POST",
+		url: base_url+"masterdesignation/delete_designation",
+		data: post_data,
+		success: function(responce_data){
+		location.reload(true);			
+		}	
+		});
+
+	} else {
+		return false;
+   }
+}
+
+function makeactiondel_pt(id){
+
+	var delitem=confirm("Are you sure to delete record?")
+	 if (delitem) {
+		var post_data=pt_id='';
+		post_data="ajax=1";
+		post_data+="&pt_id="+id;
+		jQuery.ajax({
+		type: "POST",
+		url: base_url+"Addsal/delete_pt",
+		data: post_data,
+		success: function(responce_data){
+		location.reload(true);			
+		}	
+		});
+
+	} else {
+		return false;
+   }
+
+}
+
+
+function makeactiondel_pf(id){
+
+	var delitem=confirm("Are you sure to delete record?")
+	 if (delitem) {
+		var post_data=pt_id='';
+		post_data="ajax=1";
+		post_data+="&pf_id="+id;
+		jQuery.ajax({
+		type: "POST",
+		url: base_url+"Pf/delete_pt",
+		data: post_data,
+		success: function(responce_data){
+		location.reload(true);			
+		}	
+		});
+
+	} else {
+		return false;
+   }
+
+}
+
+
+function makeaction_design(val,id){
+	var post_data=actionvsal=design_id='';
+	post_data="ajax=1";
+	post_data+="&actionvsal="+val+"&design_id="+id;
+	jQuery.ajax({
+			type: "POST",
+			url: base_url+"masterdesignation/update_designstatus",
+		   	data: post_data,
+			success: function(responce_data){
+			 location.reload(true);			
+			}	
+		});
+
+}
+
+
+
+function updatecat(id){
+	url=base_url+"menuescat/editcat?cat_id="+id;
+	window.location =url
+	return false;
+}
+
+function autocomplet() {
+
+	var min_length = 0; // min caracters to display the autocomplete
+	var keyword = $('#empid').val();
+	
+
+	if (keyword.length >= min_length) {
+		$.ajax({
+			url: "http://localhost/hrm/addsal/get_emp",
+			type: 'POST',
+			data: {keyword:keyword},
+			success:function(data){
+
+				$('#emp_list_id').show();
+				$('#emp_list_id').html(data);
+			}
+		});
+	} else {
+		$('#emp_list_id').hide();
+	}
+}
+
+// set_item : this function will be executed when we select an item
+function set_item(item) {
+
+	// change input value
+	$('#empid').val(item);
+	// hide proposition list
+	$('#emp_list_id').hide();
+	
+		$.ajax({
+			url: "http://localhost/hrm/addsal/get_emp_det",
+			type: 'POST',
+			data: {emp_id:item},
+			success:function(data){
+			var empdata=data.split("|");
+
+				$('#fullname').val(empdata[0]);
+				$('#Wing').val(empdata[2]);
+				$('#design').val(empdata[1]);
+				$('#tot_gross').val(empdata[3]);
+				$('#curlocation').val(empdata[4]);
+			
+			}
+		});
+
+} 
+
+function getpresentday(presdays){
+
+	var maxday=totgross='';
+	var maxday=$("#maxdays").val();
+	var totgross=$("#tot_gross").val();
+	var curlocation=$("#curlocation").val();
+	$.ajax({
+			url: "http://localhost/hrm/addsal/calc_emp_sal",
+			type: 'POST',
+			data: {tot_pres_days:presdays,maxday:maxday,tot_gross_sal:totgross,curlocation:curlocation},
+			success:function(data){
+					
+				var empsal=data.split("|");
+			
+
+				$('#gross_sal').val(empsal[0]);
+				$('#basic').val(empsal[1]);
+				$('#medicalallow').val(empsal[2]);
+				$('#CCA').val(empsal[3]);
+				$('#HRA').val(empsal[4]);
+				$('#TA').val(empsal[5]);
+				$('#sp_allowance').val(empsal[6]);
+				$('#gross_tot').val(empsal[7]);
+				$('#pf').val(empsal[8]);
+				$('#pt').val(empsal[9]);
+				$('#tot_ded').val(empsal[10]);
+				$('#net_sal').val(empsal[11]);
+			}
+		});
+
+}
+
+function getmaxdays_month(){
+
+	var startdate   = $("#start").val();
+	var enddate = $("#end").val();
+	$.ajax({
+			url: "http://localhost/hrm/addsal/calmaxdays",
+			type: 'POST',
+			data: {startdate:startdate,enddate:enddate},
+			success:function(data){
+
+				$('#maxdays').val(data);
+				
+			}
+		});
+
+
+}
+
