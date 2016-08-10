@@ -4,7 +4,6 @@ class Achievement extends CI_Controller
 {
     var $currentModule="";
     var $title="";
-	var $tap="";
    
     public function __construct() 
     {
